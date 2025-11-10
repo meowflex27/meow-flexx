@@ -30,26 +30,19 @@ html, body {
 
 
 .top-nav {
-  position: fixed; /* Keeps nav on top even on scroll */
+  position: fixed; /* Changed from absolute */
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 999;
+  z-index: 999; /* Ensure it's on top */
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 16px;
-  background: transparent;
+  background: black; /* Or use rgba(0, 0, 0, 0.5) for semi-transparent */
   color: white;
-}
 
-/* Mobile view: Add margin-top below 768px screen width */
-@media (max-width: 768px) {
-  .top-nav {
-  background: black;
-  }
 }
-
 
 .logo-container {
   display: flex;
@@ -59,7 +52,6 @@ html, body {
 
 .logo-img {
   height: 30px;
-  display: none;
 }
 
 .logo-text {
@@ -122,7 +114,7 @@ html, body {
   right: 0;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
   display: none;
-  z-index: 10000;
+  z-index: 999;
   padding: 0;
   overflow: hidden;
 }
@@ -1153,36 +1145,27 @@ body.meowbot-dark .watchlist-btn:hover {
 }
 
 
-/* === VIDEO PLAYER === */
+/* Video Player */
 .video-wrapper {
   width: 100%;
   max-width: 100%;
   background: black;
-  margin-top: 0px;
+  margin-top: 50px;
 }
 
 iframe#movie-frame {
   width: 100%;
-  height: 500px;
+  height: 450px;
   border: none;
 }
 
-/* === VIDEO HEADER === */
 .video-header {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 10px 15px;
-  background-color: #111;
-  color: white;
-}
-
-.video-header-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
+  padding: 10px 15px;
+  color: white;
+  background: #111;
 }
 
 .video-title {
@@ -1190,98 +1173,33 @@ iframe#movie-frame {
   font-weight: bold;
   font-family: 'Anton';
   color: gold;
-  letter-spacing: 1px;
-  flex: 1;
-  text-align: left;
+  letter-spacing: 1px; /* adjust value as needed */
 }
 
-.video-controls {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
 
-.season-select-wrapper {
-  display: flex;
-  justify-content: flex-start;
-}
-
-.season-dropdown {
-  padding: 5px 10px;
-  border-radius: 5px;
-  background-color: #222;
-  color: white;
-  border: 1px solid #444;
-  font-weight: bold;
-}
-
-/* === SERVER DROPDOWN === */
 .server-select {
   background: lime;
   color: black;
-  padding: 5px 5px;
+  padding: 5px 10px;
   border: none;
   border-radius: 5px;
-  font-size: 0.55rem;
-  font-weight: bold;
 }
 
-/* Mobile View: max-width 500px */
-@media (max-width: 500px) {
+/* Responsive Dropdown */
+@media (min-width: 300px) {
   .server-select {
+    background: lime;
+    color: black;
     padding: 5px 5px;
-    width: 60px;
-    font-size: 9px;
+    border: none;
+    border-radius: 5px;
+    width: 69px;
+    font-size: 10px;
     font-weight: bold;
   }
 }
 
-/* === DOWNLOAD BUTTON === */
-.download-button {
-  padding: 6px 12px;
-  background-color: lime;
-  color: black;
-  text-decoration: none;
-  border-radius: 5px;
-  font-size: 0.55rem;
-  display: inline-block;
-  transition: background-color 0.3s ease;
-  font-family: 'arial';
-  font-weight: bold;
-}
-
-.download-button:hover {
-  background-color: #32cd32;
-}
-
-.download-button i {
-  margin-right: 5px;
-}
-
-/* Mobile view: max-width 500px */
-@media (max-width: 500px) {
-  .download-button .download-text {
-    display: none;
-  }
-
-  .download-button i {
-    margin-right: 0;
-  }
-}
-
-/* Tablet and above: min-width 501px */
-@media (min-width: 501px) {
-  .download-button .download-text {
-    display: inline;
-  }
-
-  .download-button i {
-    margin-right: 5px;
-  }
-}
-
-
-/* === MOBILE ADJUSTMENTS === */
+/* Mobile adjustments */
 @media (max-width: 600px) {
   .top-nav {
     height: 50px;
@@ -1296,26 +1214,30 @@ iframe#movie-frame {
     height: 200px;
   }
 
-  .video-wrapper {
-    margin-top: 40px;
+.video-wrapper {
+	margin-top: 40px;
+}
+
+  .video-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
   }
 
   .video-title {
     font-size: 1rem;
+    flex: 1;
   }
 
-  .video-controls {
-    justify-content: flex-end;
-    flex-wrap: wrap;
-  }
-
-  .season-select-wrapper {
-    justify-content: flex-start;
+  .server-select {
+    flex-shrink: 0;
+    background-color: lime;
   }
 }
 
-
-/* === ERROR DISPLAY === */
+/* Error Display */
 .error {
   color: white;
   text-align: center;
@@ -1323,7 +1245,7 @@ iframe#movie-frame {
   font-size: 1.5rem;
 }
 
-/* === RELATED SECTION === */
+/* Related Section */
 .related-section {
   padding: 20px;
   background-color: #111;
@@ -1368,6 +1290,37 @@ iframe#movie-frame {
   font-size: 0.9rem;
   margin-top: 5px;
   font-family: 'Arial';
+}
+
+
+/* Download Button */
+.download-button {
+  padding: 6px 12px;
+  background-color: lime;
+  color: black;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 0.6rem;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.download-button:hover {
+  background-color: #32cd32;
+}
+
+.download-button i {
+  margin-right: 5px;
+}
+
+@media (max-width: 300px) {
+  .download-button .download-text {
+    display: none;
+  }
+
+  .download-button i {
+    margin-right: 0;
+  }
 }
 
 
@@ -2050,7 +2003,6 @@ iframe#movie-frame {
   padding: 10px;
   text-align: center;
   width: 100%;
-  font-family: 'Arial';
 }
 
 /* === Responsive Adjustments === */
@@ -2347,8 +2299,8 @@ iframe#movie-frame {
   .continue-section .section-title {
     font-size: 0.8rem;
     font-weight: bold;
-    margin-left: 15px;
-	margin-top: 0px;
+    margin-left: 20px;
+	margin-top: 15px;
 	margin-bottom: -10px;
   }
 }
@@ -2404,23 +2356,14 @@ iframe#movie-frame {
 .label-content {
   display: none;
   padding: 1em;
-  background: transparent;
+  background: #111;
   color: #fff;
   border-radius: 8px;
-  margin-top: -20px;
+  margin-top: 10px;
 }
-
 .label-content.active {
   display: block;
 }
-
-/* Mobile view */
-@media (max-width: 500px) {
-  .label-content {
-    margin-top: -25px;
-  }
-}
-
 /* === EPISODES: DEFAULT GRID (Desktop) === */
 .episode-thumbs {
   display: grid;
@@ -2475,7 +2418,7 @@ iframe#movie-frame {
   left: 50%;
   font-size: 14px;
   transform: translate(-50%, -50%);
-  color: red;
+  color: white;
   opacity: 0.7;
   pointer-events: none;
 }
@@ -2567,39 +2510,6 @@ iframe#movie-frame {
     font-size: 8px;
   }
 }
-
-@media (min-width: 769px) {
-  .episode-thumbs {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* ✅ reduced from 200px */
-  }
-
-  .episode-thumb {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .thumb-wrapper {
-    width: 100%;
-    height: 70px; /* or 50px if you want it smaller */
-  }
-
-  .thumb-wrapper img {
-    object-fit: cover;
-  }
-
-  .episode-details {
-    width: 100%;
-    padding-top: 6px;
-  }
-
-  .episode-title,
-  .episode-desc {
-    white-space: normal;
-    overflow: visible;
-    text-overflow: unset;
-  }
-}
-
 
 
 /* === RESPONSIVE === */
@@ -2893,10 +2803,7 @@ body.light-mode .label.active {
     transform: none;
     width: 100%;
     padding: 10px 15px;
-    border-top: 2px solid lime;
-    border-left: 2px solid lime;
-    border-right: 2px solid lime;
-    border-bottom: none; /* Removed bottom border */
+    border: 2px solid lime; /* All sides */
     border-radius: 30px 30px 0 0;
   }
 
@@ -2916,7 +2823,6 @@ body.light-mode .label.active {
     font-size: 10px;
   }
 }
-
 
 /* TABLET VIEW: 501px–1024px (same as desktop) */
 @media (min-width: 501px) and (max-width: 1024px) {
@@ -2949,6 +2855,10 @@ body.light-mode .label.active {
     font-size: 11px;
   }
 }
+
+
+/*scrolling*/
+/* === Mobile Scrolling Performance Boost === */
 
 /* Enable smooth scroll behavior globally */
 html {
@@ -3004,50 +2914,4 @@ img[loading="lazy"] {
 .logo-link {
   text-decoration: none; /* removes underline */
   color: inherit;        /* keeps text color consistent */
-}
-
-
-/* === Base Styles === */
-.season-container {
-  padding: 10px 15px;
-}
-
-.season-select-wrapper {
-  display: inline-block;
-}
-
-.season-dropdown {
-  padding: 6px 10px;
-  font-size: 0.9rem;
-  border-radius: 5px;
-  width: 150px;
-}
-
-/* === Mobile View (Max width 500px) === */
-@media (max-width: 500px) {
-  .season-container {
-    padding: 8px 10px;
-  }
-
-  .season-dropdown {
-    width: 100%;
-    font-size: 0.70rem;
-	padding: 4px 6px;
-  }
-
-  .season-select-wrapper {
-    width: 90px;
-  }
-}
-
-/* === Tablet View (501px to 1024px) === */
-@media (min-width: 501px) and (max-width: 1024px) {
-  .season-container {
-    padding: 10px 12px;
-  }
-
-  .season-dropdown {
-    width: 140px;
-    font-size: 0.9rem;
-  }
 }
