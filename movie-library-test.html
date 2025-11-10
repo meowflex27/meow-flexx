@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Movie Details</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    .details-page .backdrop {
+      background-size: cover;
+      background-position: center;
+      height: 60vh;
+      width: 100%;
+      position: relative;
+    }
+    .details-page .content {
+      padding: 2rem;
+      background-color: rgba(0, 0, 0, 0.75);
+      color: white;
+      margin-top: -150px;
+      position: relative;
+      z-index: 2;
+      border-radius: 1rem;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .trailer-modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 999;
+    }
+    .modal-content {
+      position: relative;
+      width: 90%;
+      max-width: 800px;
+    }
+    .modal-content .close {
+      position: absolute;
+      top: -10px; right: -10px;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <main id="movie-container" class="details-page">
+    <div class="backdrop"></div>
+    <div class="content">
+      <h1 id="movie-title">Loading...</h1>
+      <p id="movie-overview"></p>
+      <p><strong>Genres:</strong> <span id="movie-genres"></span></p>
+      <button id="trailer-button"><i class="fas fa-play"></i> Watch Trailer</button>
+    </div>
+  </main>
+
+  <div id="trailerModal" class="trailer-modal" style="display:none;">
+    <div class="modal-content">
+      <span onclick="closeTrailerModal()" class="close">&times;</span>
+      <iframe id="trailerIframe" width="100%" height="400" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <script>
+const apiKey = 'ea97a714a43a0e3481592c37d2c7178a';
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+const type = params.get("type") || "movie"; // fallback to 'movie'
+
+// Example: fetch details of the movie
+async function loadMediaDetails() {
+  if (!id || !type) return;
+
+  try {
+    const res = await fetch(`https://api.themoviedb.org/3/${type}/${id}?api_key=${apiKey}&append_to_response=videos`);
+    const data = await res.json();
+
+    document.body.innerHTML = `
+      <h1>${data.title || data.name}</h1>
+      <p>${data.overview}</p>
+      <div>
+        ${getTrailerEmbed(data.videos)}
+      </div>
+    `;
+  } catch (err) {
+    console.error("Error loading movie:", err);
+  }
+}
+
+function getTrailerEmbed(videos) {
+  if (!videos || !videos.results.length) return "<p>No trailer found.</p>";
+  const trailer = videos.results.find(v => v.type === "Trailer" && v.site === "YouTube");
+  return trailer
+    ? `<iframe width="560" height="315" src="https://www.youtube.com/embed/${trailer.key}" frameborder="0" allowfullscreen></iframe>`
+    : "<p>No trailer found.</p>";
+}
+
+loadMediaDetails();
+  </script>
+</body>
+</html>
